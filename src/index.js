@@ -118,7 +118,7 @@ class Game extends React.Component {
             highlightArr[combo[1]] = 'square highlightSquare';
             highlightArr[combo[2]] = 'square highlightSquare';
         }
-        else if (this.state.stepNumber == 9) {
+        else if (this.state.stepNumber === 9) {
             status = 'Draw Match';
         }
         else {
