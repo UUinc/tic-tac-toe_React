@@ -51,7 +51,15 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            moveLocation: Array(9).fill(null),
         };
+    }
+
+    getMoveLocation(i) {
+        const arrIndices = ['(1, 1)', '(2, 1)', '(3, 1)', '(1, 2)', '(2, 2)', '(3, 2)', '(1, 3)', '(2, 3)', '(3, 3)'];
+        const arr = this.state.moveLocation.slice();
+        arr[this.state.stepNumber] = arrIndices[i];
+        return arr;
     }
 
     handleClick(i) {
@@ -66,6 +74,7 @@ class Game extends React.Component {
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
+            moveLocation: this.getMoveLocation(i),
         });
     }
 
@@ -82,7 +91,7 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            const desc = move ? 'Go to move #' + move : 'Go to game start';
+            const desc = move ? 'Go to move #' + move + ' ' + this.state.moveLocation[move - 1] : 'Go to game start';
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
