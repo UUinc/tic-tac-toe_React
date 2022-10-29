@@ -68,7 +68,7 @@ class Game extends React.Component {
         const current = history[history.length - 1];
         const squares = current.squares.slice();
 
-        if (calculateWinner(squares) !== null || squares[i]) {
+        if (calculateWinner(squares) || squares[i]) {
             return;
         }
 
@@ -94,7 +94,7 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares) !== null;
+        const winner = calculateWinner(current.squares);
         const combo = highlightWinningSquares(current.squares);
 
         const moves = history.map((step, move) => {
@@ -117,6 +117,9 @@ class Game extends React.Component {
             highlightArr[combo[0]] = 'square highlightSquare';
             highlightArr[combo[1]] = 'square highlightSquare';
             highlightArr[combo[2]] = 'square highlightSquare';
+        }
+        else if (this.state.stepNumber == 9) {
+            status = 'Draw Match';
         }
         else {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
@@ -144,7 +147,7 @@ function calculateWinner(squares) {
     console.log("calculate winner");
     const line = highlightWinningSquares(squares);
     console.log("win:" + line);
-    return line ? line[0] : null;
+    return line ? squares[line[0]] : null;
 }
 function highlightWinningSquares(squares) {
     const lines = [
